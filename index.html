@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Developments — AI Transformation Map 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ============ THEME TOKENS ============ */
+  :root[data-theme="dark"] {
+    --bg: #06070A;
+    --bg-elev: #0E1014;
+    --bg-card: #12141A;
+    --bg-card-hover: #171A22;
+    --line: rgba(201, 164, 76, 0.15);
+    --line-soft: rgba(255, 255, 255, 0.05);
+    --line-mid: rgba(255, 255, 255, 0.09);
+    --gold: #D4AF5C;
+    --gold-bright: #F0D085;
+    --gold-glow: rgba(212, 175, 92, 0.3);
+    --text: #F5F5F0;
+    --text-dim: #A8A79F;
+    --text-faint: #5E5D56;
+    --grid-line: rgba(212, 175, 92, 0.035);
+    --pain-bg: rgba(212, 175, 92, 0.04);
+    --editable-bg: rgba(255, 255, 255, 0.02);
+    --editable-border: rgba(255, 255, 255, 0.1);
+  }
+
+  :root[data-theme="light"] {
+    --bg: #FAF9F6;
+    --bg-elev: #F2F0E9;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #FDFCF8;
+    --line: rgba(140, 110, 50, 0.18);
+    --line-soft: rgba(0, 0, 0, 0.06);
+    --line-mid: rgba(0, 0, 0, 0.1);
+    --gold: #8B6D2E;
+    --gold-bright: #B48C3E;
+    --gold-glow: rgba(139, 109, 46, 0.2);
+    --text: #0A0A0B;
+    --text-dim: #4A4A42;
+    --text-faint: #8B8A82;
+    --grid-line: rgba(139, 109, 46, 0.05);
+    --pain-bg: rgba(139, 109, 46, 0.05);
+    --editable-bg: rgba(0, 0, 0, 0.02);
+    --editable-border: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Department accent colors */
+  :root {
+    --c-marketing: #E94E77;
+    --c-sales: #3B82F6;
+    --c-accounting: #10B981;
+    --c-development: #F59E0B;
+    --c-property: #8B5CF6;
+    --c-warranty: #06B6D4;
+    --c-partner: #EC4899;
+    --c-construction: #F97316;
+    --c-hr: #14B8A6;
+    --c-admin: #6366F1;
+    --c-legal: #A855F7;
+    --c-it: #EF4444;
+    --c-capital: #D4AF5C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+
+  /* ============ ATMOSPHERIC BG ============ */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(120px);
+    z-index: 0;
+    opacity: 0.4;
+    animation: float 20s ease-in-out infinite;
+  }
+
+  .bg-orb.one { width: 600px; height: 600px; background: var(--c-sales); top: -200px; left: -100px; opacity: 0.08; }
+  .bg-orb.two { width: 500px; height: 500px; background: var(--c-marketing); top: 40%; right: -150px; opacity: 0.08; animation-delay: -10s; }
+  .bg-orb.three { width: 400px; height: 400px; background: var(--c-accounting); bottom: 10%; left: 30%; opacity: 0.08; animation-delay: -5s; }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(40px, -30px) scale(1.05); }
+    66% { transform: translate(-30px, 40px) scale(0.95); }
+  }
+
+  /* ============ THEME TOGGLE ============ */
+  .theme-toggle {
+    position: fixed; top: 24px; right: 24px; z-index: 100;
+    background: var(--bg-card); border: 1px solid var(--line); color: var(--text);
+    padding: 12px 18px; font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.15em; cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    backdrop-filter: blur(20px); transition: all 0.3s ease;
+  }
+
+  .theme-toggle:hover { border-color: var(--gold); box-shadow: 0 0 20px var(--gold-glow); }
+  .theme-toggle svg { width: 14px; height: 14px; stroke: var(--gold); stroke-width: 1.5; fill: none; }
+
+  .container {
+    position: relative; z-index: 1;
+    max-width: 1440px; margin: 0 auto; padding: 0 48px;
+  }
+
+  /* ============ REVEAL ============ */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal.delay-1 { transition-delay: 0.08s; }
+  .reveal.delay-2 { transition-delay: 0.16s; }
+  .reveal.delay-3 { transition-delay: 0.24s; }
+  .reveal.delay-4 { transition-delay: 0.32s; }
+
+  /* ============ COVER ============ */
+  .cover {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: space-between; padding: 48px 0; position: relative;
+  }
+
+  .cover-top {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .live { display: flex; align-items: center; gap: 8px; }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold); animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 10px var(--gold-glow);
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .cover-main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 80px 0; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .eyebrow::before {
+    content: ''; width: 40px; height: 1px; background: var(--gold);
+    animation: expand 1.5s ease-out 0.3s both;
+  }
+
+  @keyframes expand { from { width: 0; } to { width: 40px; } }
+
+  h1.cover-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(56px, 8.5vw, 128px);
+    font-weight: 300; line-height: 0.93; letter-spacing: -0.03em;
+    color: var(--text); margin-bottom: 36px;
+  }
+
+  h1.cover-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--c-marketing), var(--c-sales), var(--c-accounting), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 400;
+  }
+
+  .cover-subtitle {
+    font-size: 20px; line-height: 1.5; color: var(--text-dim);
+    max-width: 720px; font-weight: 300; margin-bottom: 56px;
+  }
+
+  .cover-meta {
+    display: flex; gap: 48px; padding-top: 32px;
+    border-top: 1px solid var(--line-soft); max-width: 900px;
+  }
+
+  .meta-item { flex: 1; }
+  .meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--text-faint); font-weight: 500; margin-bottom: 10px;
+  }
+  .meta-value {
+    font-family: 'Fraunces', serif; font-size: 18px;
+    color: var(--text); font-weight: 400;
+  }
+
+  .cover-footer {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* ============ SECTION HEADERS ============ */
+  .section-header {
+    padding: 140px 0 72px;
+    border-top: 1px solid var(--line-soft);
+    margin-top: 48px; position: relative;
+  }
+
+  .section-header::before {
+    content: ''; position: absolute; top: -1px; left: 0;
+    width: 120px; height: 1px; background: var(--gold);
+  }
+
+  .section-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--gold);
+    margin-bottom: 20px; letter-spacing: 0.15em;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(40px, 5.5vw, 72px);
+    font-weight: 300; line-height: 1.02; letter-spacing: -0.02em;
+    margin-bottom: 24px; max-width: 1000px;
+  }
+
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  .section-desc {
+    font-size: 17px; color: var(--text-dim);
+    max-width: 720px; line-height: 1.65; font-weight: 300;
+  }
+
+  /* ============ STATS ============ */
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--line-soft);
+    border: 1px solid var(--line-soft); margin-bottom: 56px;
+    position: relative; overflow: hidden;
+  }
+
+  .stat {
+    background: var(--bg-card); padding: 44px 32px;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: all 0.5s ease; position: relative; overflow: hidden;
+  }
+
+  .stat::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px;
+    transform: translateX(-100%); transition: transform 0.6s ease;
+  }
+
+  .stat:nth-child(1)::before { background: linear-gradient(90deg, var(--c-marketing), var(--c-sales)); }
+  .stat:nth-child(2)::before { background: linear-gradient(90deg, var(--c-accounting), var(--c-development)); }
+  .stat:nth-child(3)::before { background: linear-gradient(90deg, var(--c-property), var(--c-warranty)); }
+  .stat:nth-child(4)::before { background: linear-gradient(90deg, var(--c-legal), var(--c-it)); }
+
+  .stat:hover { background: var(--bg-card-hover); }
+  .stat:hover::before { transform: translateX(0); }
+
+  .stat-value {
+    font-family: 'Fraunces', serif;
+    font-size: 56px; font-weight: 300; line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .stat:nth-child(1) .stat-value { color: var(--c-marketing); }
+  .stat:nth-child(2) .stat-value { color: var(--c-accounting); }
+  .stat:nth-child(3) .stat-value { color: var(--c-property); }
+  .stat:nth-child(4) .stat-value { color: var(--gold); }
+
+  .stat-label { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .stat-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--text-faint);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-top: auto; padding-top: 12px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  /* ============ DEPARTMENT MAP CARDS ============ */
+  .dept-map {
+    background: var(--bg-card);
+    border: 1px solid var(--line-soft);
+    margin-bottom: 32px; position: relative;
+    overflow: hidden; transition: all 0.4s ease;
+  }
+
+  .dept-map::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--dept-color);
+  }
+
+  .dept-map::after {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, var(--dept-color), transparent 70%);
+    opacity: 0.06; pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .dept-map:hover::after { opacity: 0.12; }
+
+  /* Map header */
+  .map-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 32px 40px;
+    border-bottom: 1px solid var(--line-soft);
+    position: relative;
+  }
+
+  .map-icon-wrap {
+    width: 64px; height: 64px;
+    border: 1.5px solid var(--dept-color);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    background: var(--bg-card);
+  }
+
+  .map-icon-wrap::before {
+    content: ''; position: absolute; inset: -6px;
+    border: 1px solid var(--dept-color);
+    opacity: 0.2;
+    transition: all 0.4s ease;
+  }
+
+  .dept-map:hover .map-icon-wrap::before {
+    inset: -10px;
+    opacity: 0.4;
+  }
+
+  .map-icon-wrap svg {
+    width: 28px; height: 28px;
+    stroke: var(--dept-color);
+    stroke-width: 1.5; fill: none;
+  }
+
+  .map-title-block { flex: 1; }
+
+  .map-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dept-color);
+    margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .map-tag-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--dept-color);
+    box-shadow: 0 0 8px var(--dept-color);
+  }
+
+  .map-name {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .map-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dept-color);
+    padding: 8px 14px;
+    border: 1px solid var(--dept-color);
+    background: transparent;
+  }
+
+  /* Map body - 4 column layout */
+  .map-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line-soft);
+  }
+
+  .map-quad {
+    background: var(--bg-card);
+    padding: 32px 40px;
+    min-height: 200px;
+    position: relative;
+  }
+
+  .quad-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line-soft);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .quad-label::before {
+    content: '';
+    width: 10px; height: 10px;
+    border: 1.5px solid var(--dept-color);
+    flex-shrink: 0;
+  }
+
+  .quad-label.pain::before { background: var(--dept-color); }
+
+  .pain-text {
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  /* Recs list with color */
+  .recs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 28px;
+  }
+
+  .rec-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text);
+    padding: 4px 0;
+    transition: transform 0.3s ease;
+  }
+
+  .rec-item:hover { transform: translateX(3px); }
+
+  .rec-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    min-width: 22px;
+    font-weight: 500;
+    padding-top: 2px;
+    color: var(--dept-color);
+    letter-spacing: 0.05em;
+  }
+
+  /* Editable sections */
+  .editable {
+    background: var(--editable-bg);
+    border: 1px dashed var(--editable-border);
+    padding: 16px 18px;
+    min-height: 80px;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+    outline: none;
+  }
+
+  .editable:hover, .editable:focus {
+    background: var(--bg-card-hover);
+    border-color: var(--dept-color);
+    color: var(--text);
+    font-style: normal;
+  }
+
+  .editable:empty::before {
+    content: attr(data-placeholder);
+    color: var(--text-faint);
+    font-style: italic;
+  }
+
+  /* Full-width body for mapping */
+  .map-body-full {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  /* Metrics strip */
+  .map-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line-soft);
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .metric {
+    background: var(--bg-card);
+    padding: 20px 32px;
+  }
+
+  .metric-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 6px;
+  }
+
+  .metric-value {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    color: var(--dept-color);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* ============ ELITE CAPITAL ============ */
+  .capital-block {
+    margin: 56px 0;
+    padding: 72px 56px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .capital-block::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--c-capital), transparent);
+  }
+
+  .capital-block::after {
+    content: ''; position: absolute; top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, var(--gold-glow), transparent 70%);
+    pointer-events: none;
+  }
+
+  .capital-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+
+  .capital-title {
+    font-family: 'Fraunces', serif;
+    font-size: 44px; font-weight: 300;
+    letter-spacing: -0.02em; line-height: 1.1;
+    margin-bottom: 20px; max-width: 900px;
+  }
+
+  .capital-title em { font-style: italic; color: var(--gold); }
+
+  .capital-desc {
+    font-size: 16px; color: var(--text-dim);
+    line-height: 1.65; max-width: 820px;
+    margin-bottom: 48px; font-weight: 300;
+  }
+
+  .capital-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 48px 56px; position: relative; z-index: 1;
+  }
+
+  .capital-item { display: flex; gap: 18px; align-items: flex-start; }
+
+  .capital-item-num {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 24px; color: var(--gold);
+    line-height: 1; min-width: 36px;
+  }
+
+  .capital-item-content h4 {
+    font-size: 14px; font-weight: 600;
+    color: var(--text); margin-bottom: 8px;
+    letter-spacing: -0.005em;
+  }
+
+  .capital-item-content p {
+    font-size: 13px; color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  /* ============ CLOSING ============ */
+  .closing {
+    padding: 140px 0 100px;
+    border-top: 1px solid var(--line-soft);
+    margin-top: 96px; position: relative;
+  }
+
+  .closing::before {
+    content: ''; position: absolute; top: -1px; left: 0;
+    width: 120px; height: 1px; background: var(--gold);
+  }
+
+  .closing-quote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300; font-style: italic;
+    line-height: 1.22; letter-spacing: -0.015em;
+    max-width: 1000px; color: var(--text); margin-bottom: 48px;
+  }
+
+  .closing-quote em {
+    background: linear-gradient(135deg, var(--c-marketing), var(--c-sales), var(--c-accounting), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .closing-attribution {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--text-faint);
+  }
+
+  footer {
+    padding: 48px 0; border-top: 1px solid var(--line-soft);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-faint);
+    display: flex; justify-content: space-between;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) {
+    .map-head { grid-template-columns: auto 1fr; }
+    .map-badge { grid-column: 1 / -1; }
+    .map-body, .recs-grid, .capital-grid, .stats-grid, .map-metrics { grid-template-columns: 1fr; }
+    .cover-meta { flex-direction: column; gap: 20px; }
+  }
+
+  @media (max-width: 640px) {
+    .container { padding: 0 24px; }
+    .map-head, .map-quad { padding: 24px 20px; }
+    .capital-block { padding: 32px 24px; }
+    .theme-toggle { top: 16px; right: 16px; padding: 10px 14px; }
+  }
+
+  @media print {
+    body { background: white; color: black; }
+    .bg-grid, .bg-orb, .theme-toggle { display: none; }
+    .dept-map, .capital-block, .stat { break-inside: avoid; }
+    .cover { min-height: auto; page-break-after: always; }
+    .section-header { page-break-before: always; }
+  }
+
+</style>
+</head>
+<body data-theme="dark">
+
+<div class="bg-grid"></div>
+<div class="bg-orb one"></div>
+<div class="bg-orb two"></div>
+<div class="bg-orb three"></div>
+
+<button class="theme-toggle" onclick="toggleTheme()">
+  <svg id="theme-icon" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+  <span id="theme-label">LIGHT MODE</span>
+</button>
+
+<div class="container">
+
+  <!-- ========== COVER ========== -->
+  <section class="cover">
+    <div class="cover-top">
+      <div class="live">
+        <div class="live-dot"></div>
+        <span>SYSTEM · TRANSFORMATION MAP</span>
+      </div>
+      <div>CONFIDENTIAL · INTERNAL</div>
+    </div>
+
+    <div class="cover-main">
+      <div class="eyebrow reveal in-view">AI Transformation Map · 2026 Edition</div>
+      <h1 class="cover-title reveal in-view delay-1">
+        Every department.<br>
+        <em>Mapped & Reinvented.</em>
+      </h1>
+      <p class="cover-subtitle reveal in-view delay-2">
+        A color-coded department mapping exercise showing how Claude, AI, and intelligent agents transform every function at Elite Developments and Elite Capital — with built-in space to capture your team's own gaps, ideas, and priorities.
+      </p>
+
+      <div class="cover-meta reveal in-view delay-3">
+        <div class="meta-item">
+          <div class="meta-label">Prepared For</div>
+          <div class="meta-value">Ownership & Managers</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Prepared By</div>
+          <div class="meta-value">Ahmad Mirza, HR</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Functions Mapped</div>
+          <div class="meta-value">13 Departments</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">AI Initiatives</div>
+          <div class="meta-value">96+ Recommendations</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cover-footer">
+      <div>Elite Developments · Elite Capital (DIFC) Limited</div>
+      <div>Building Excellence · Ontario Wide</div>
+    </div>
+  </section>
+
+  <!-- ========== EXECUTIVE SUMMARY ========== -->
+  <section>
+    <div class="section-header reveal">
+      <div class="section-number">01 · THE CASE</div>
+      <h2 class="section-title">Intelligence as the new <em>competitive edge.</em></h2>
+      <p class="section-desc">
+        Elite is scaling across Ontario with lean teams managing $6B+ of projected value and 45+ active projects. AI is not a cost center. It is the operating leverage that compresses timelines, sharpens margins, and turns every department into a force multiplier.
+      </p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat reveal delay-1">
+        <div class="stat-value">13</div>
+        <div class="stat-label">Departments mapped, each with gap analysis and AI playbook</div>
+        <div class="stat-meta">FUNCTIONS</div>
+      </div>
+      <div class="stat reveal delay-2">
+        <div class="stat-value">96</div>
+        <div class="stat-label">Concrete AI initiatives identified across the full organization</div>
+        <div class="stat-meta">RECOMMENDATIONS</div>
+      </div>
+      <div class="stat reveal delay-3">
+        <div class="stat-value">$6B+</div>
+        <div class="stat-label">Projected completed value secured by intelligent operations</div>
+        <div class="stat-meta">PORTFOLIO</div>
+      </div>
+      <div class="stat reveal delay-4">
+        <div class="stat-value">90d</div>
+        <div class="stat-label">Phased rollout beginning this fiscal year, measurable within 90 days</div>
+        <div class="stat-meta">TIMELINE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DEPARTMENT MAPS ========== -->
+  <section>
+    <div class="section-header reveal">
+      <div class="section-number">02 · THE MAPPING EXERCISE</div>
+      <h2 class="section-title">Department <em>by</em> department.</h2>
+      <p class="section-desc">
+        Each department is mapped across four zones: the current pain point, AI recommendations, space for your own gaps, and space for additional ideas. Click any dotted section to add your own input. This is designed to live and evolve with your team.
+      </p>
+    </div>
+
+    <!-- ============================= -->
+    <!-- 01 MARKETING -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-marketing);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 11l18-8v18l-18-8zM3 11v4a2 2 0 002 2h2l2 5"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>01 · Marketing</div>
+          <div class="map-name">Marketing & Brand</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Branding takes forever. Raw files sit idle before reaching market. No SEO, no paid ads, no centralized spend control. Ambrose, Riverview, 88 James, Parkline — each community marketed in isolation without a reusable engine.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>Raw to market-ready creative in hours, not weeks</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated email sequences per community launch</div>
+            <div class="rec-item"><span class="rec-num">03</span>SEO content engine for every project microsite</div>
+            <div class="rec-item"><span class="rec-num">04</span>AI-managed Google, Meta, LinkedIn campaigns with spend guardrails</div>
+            <div class="rec-item"><span class="rec-num">05</span>Unified marketing spend dashboard with anomaly alerts</div>
+            <div class="rec-item"><span class="rec-num">06</span>Ad variant generation and A/B testing pre-deployment</div>
+            <div class="rec-item"><span class="rec-num">07</span>Lead-to-deposit attribution across every channel</div>
+            <div class="rec-item"><span class="rec-num">08</span>Reusable launch playbook template per community type</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add your team's observations on marketing gaps, bottlenecks, or specific pain points not captured above…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI ideas, tools, or initiatives your team would prioritize for marketing…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Zharne / Terri</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30-60 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 02 REAL ESTATE SALES -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-sales);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 21V9l9-7 9 7v12M9 21v-6h6v6"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>02 · Sales</div>
+          <div class="map-name">Real Estate Sales</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Communication with purchasers and prospects is slow and inconsistent. The Ambrose sold out in three weeks, but every community should replicate that velocity. Warm leads cool while reps chase paperwork. Post-sale nurture through closing is manual and uneven.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>24/7 AI chat concierge on every community landing page</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated lead qualification and nurture sequences</div>
+            <div class="rec-item"><span class="rec-num">03</span>Purchaser copilot: always-on construction milestone updates</div>
+            <div class="rec-item"><span class="rec-num">04</span>Draft contracts, amendments, waivers in minutes</div>
+            <div class="rec-item"><span class="rec-num">05</span>Suite availability and pricing Q&A via Claude</div>
+            <div class="rec-item"><span class="rec-num">06</span>Call recording analysis with coaching insights per rep</div>
+            <div class="rec-item"><span class="rec-num">07</span>Weekly pipeline digests with deal-stage forecasts</div>
+            <div class="rec-item"><span class="rec-num">08</span>Post-sale nurture automation from firm to closing</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add your team's observations on sales gaps, communication breakdowns, or lost-lead patterns…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI ideas or sales enablement tools your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Zharne / Lindsay</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Critical</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 03 ACCOUNTING -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-accounting);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM7 8h10M7 12h10M7 16h6"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>03 · Finance</div>
+          <div class="map-name">Accounting & Finance</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Accounting spends massive hours in Excel consolidating monthly and yearly financials, tax work, and reporting across 45+ projects and 30+ properties. E&Y expects clean inputs, but the team is firefighting spreadsheets instead of analyzing performance. Cost-control frameworks lose efficiency at this scale.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>AI monthly close automation across all 45+ entities</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated Excel consolidation from QuickBooks, Procore, Dayforce</div>
+            <div class="rec-item"><span class="rec-num">03</span>Claude-drafted variance analysis and exception flagging</div>
+            <div class="rec-item"><span class="rec-num">04</span>Tax work automation for 30+ properties with CRA compliance</div>
+            <div class="rec-item"><span class="rec-num">05</span>AI-generated E&Y-ready reporting packs (70% prep reduction)</div>
+            <div class="rec-item"><span class="rec-num">06</span>Fixed-price contract tracking and cost-to-complete forecasting</div>
+            <div class="rec-item"><span class="rec-num">07</span>Automated AR/AP, invoice capture, vendor payment workflows</div>
+            <div class="rec-item"><span class="rec-num">08</span>Real-time portfolio P&L dashboard for leadership and investors</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add specific accounting pain points: reconciliation issues, reporting delays, tax complexity, audit prep burdens…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI finance tools, automations, or dashboards your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Tameem / Basir</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Critical</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60-90 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 04 DEVELOPMENT -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-development);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 9h18M9 3v18"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>04 · Development</div>
+          <div class="map-name">Development</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Project timelines drag. Tracking across 45+ active projects is fragmented. Team skews junior — authority and follow-ups are weak. Pre-development, zoning, and permitting readiness lags behind Elite Capital's investor-facing pipeline promises.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>AI project tracker consolidating 45+ projects in one view</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated escalation when milestones stall past threshold</div>
+            <div class="rec-item"><span class="rec-num">03</span>Training library for junior staff: institutional memory on demand</div>
+            <div class="rec-item"><span class="rec-num">04</span>AI feasibility and zoning analysis, shovel-ready in days</div>
+            <div class="rec-item"><span class="rec-num">05</span>Automated pro forma drafting and sensitivity analysis</div>
+            <div class="rec-item"><span class="rec-num">06</span>Municipal council agenda and decision-log summaries</div>
+            <div class="rec-item"><span class="rec-num">07</span>Planning justifications drafted from site inputs and comps</div>
+            <div class="rec-item"><span class="rec-num">08</span>Weekly project readiness scorecards for leadership</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add development gaps: permitting delays, team capacity, approvals tracking, site-specific issues…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI tools for zoning, pro formas, entitlements, or project management your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Ahmed M. / Joe M.</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Critical</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 05 PROPERTY MANAGEMENT -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-property);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v11H3zM9 21v-6h6v6M8 13h8"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>05 · Property Management</div>
+          <div class="map-name">Property Management</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Managing 30+ properties across Garner Square, Laurentian Plaza, Conklin Plaza, and the growing residential portfolio manually. Tenant communication, lease renewals, maintenance dispatch, and occupancy tracking live in spreadsheets. Full occupancy is the standard, but operational overhead scales linearly with doors.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>AI tenant concierge for maintenance, rent inquiries, renewals</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated lease renewal workflows and rent escalation tracking</div>
+            <div class="rec-item"><span class="rec-num">03</span>Predictive maintenance flagging across all 30+ properties</div>
+            <div class="rec-item"><span class="rec-num">04</span>AI-drafted tenant communications, notices, legal correspondence</div>
+            <div class="rec-item"><span class="rec-num">05</span>Real-time occupancy and rent-roll dashboards for leadership</div>
+            <div class="rec-item"><span class="rec-num">06</span>Smart vendor dispatch with performance ranking per property</div>
+            <div class="rec-item"><span class="rec-num">07</span>Automated arrears management and payment reminder sequences</div>
+            <div class="rec-item"><span class="rec-num">08</span>Portfolio-level NOI optimization insights and benchmarking</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add property management gaps: tenant turnover, maintenance response times, vendor management…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI property management tools, tenant portals, or operational ideas your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Maisome / Jimmy</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60-90 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 06 WARRANTY -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-warranty);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 2l9 5v6c0 5-4 9-9 11-5-2-9-6-9-11V7l9-5zM9 12l2 2 4-4"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>06 · Warranty</div>
+          <div class="map-name">Warranty · Elite Care</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">With The Ambrose delivered, Riverview completing in 2026, and Parkline coming online, warranty volume will compound fast. Current homeowner communication is reactive. Systemic defects surface too late. Tarion exposure is under-managed at the portfolio level.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>Triage tickets by urgency, warranty item, Tarion category</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated first-response replies to common queries</div>
+            <div class="rec-item"><span class="rec-num">03</span>Pattern detection across defects to catch systemic issues early</div>
+            <div class="rec-item"><span class="rec-num">04</span>Claude-drafted warranty letters and close-out summaries</div>
+            <div class="rec-item"><span class="rec-num">05</span>Predictive maintenance flags from repeat-call data</div>
+            <div class="rec-item"><span class="rec-num">06</span>Homeowner sentiment tracking from email and call logs</div>
+            <div class="rec-item"><span class="rec-num">07</span>Automated PDI checklist and follow-up sequencing</div>
+            <div class="rec-item"><span class="rec-num">08</span>Tarion knowledge base searchable by staff in seconds</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add warranty gaps: response delays, defect tracking, Tarion exposure, homeowner complaints…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI warranty tools, homeowner portals, or service automation your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Nic / Jennifer / Ian</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 07 PARTNER RELATIONS -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-partner);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M8 11l-4 4 4 4M16 5l4 4-4 4M3 15h18M3 9h18"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>07 · Partnerships</div>
+          <div class="map-name">Partner Relations</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Juniper was signed but never activated. No systematic partner management. Communication with brokers, municipalities (Niagara Falls PPP), and joint-venture partners is inconsistent. New opportunities like Parkline-style partnerships slip through the cracks.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>Full Juniper rollout with AI-assisted adoption and training</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated broker communication sequences per community</div>
+            <div class="rec-item"><span class="rec-num">03</span>AI-generated partner performance scorecards monthly</div>
+            <div class="rec-item"><span class="rec-num">04</span>Claude-assisted co-broker and JV contract review</div>
+            <div class="rec-item"><span class="rec-num">05</span>Personalized outreach at scale: every broker feels prioritized</div>
+            <div class="rec-item"><span class="rec-num">06</span>Municipal partnership radar (Parkline-style PPP opportunities)</div>
+            <div class="rec-item"><span class="rec-num">07</span>Automated reporting packs for top-tier partners and investors</div>
+            <div class="rec-item"><span class="rec-num">08</span>AI-drafted event invites, follow-ups, thank-you sequences</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add partnership gaps: broker onboarding, Juniper rollout blockers, PPP opportunity evaluation…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI partner management tools, CRM ideas, or partnership models your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Neelo / Leen</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30-60 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 08 CONSTRUCTION -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-construction);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M2 20h20M4 20V10l8-6 8 6v10M9 20v-6h6v6"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>08 · Construction</div>
+          <div class="map-name">Construction</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Manual site reporting across Brooklyn Construction-led projects. Reactive issue tracking. Inconsistent subcontractor follow-through. With Parkline under construction and multiple projects concurrent, delays compound before they become visible to leadership.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>AI-assisted daily site progress reports from photos and logs</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated RFI drafting and contractor follow-up sequences</div>
+            <div class="rec-item"><span class="rec-num">03</span>Schedule risk analysis: slippage flagged before compounding</div>
+            <div class="rec-item"><span class="rec-num">04</span>Safety audit summaries from site inspection notes</div>
+            <div class="rec-item"><span class="rec-num">05</span>Material price forecasting and waste-reduction insights</div>
+            <div class="rec-item"><span class="rec-num">06</span>Subcontractor scorecards: reliability, quality, speed</div>
+            <div class="rec-item"><span class="rec-num">07</span>Predictive delay modeling across concurrent projects</div>
+            <div class="rec-item"><span class="rec-num">08</span>Claude-drafted change orders, deficiency reports, close-outs</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add construction gaps: subcontractor issues, schedule slippage, safety incidents, material costs…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI construction tools, Procore integrations, or site automation your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Marko / Igor / Yasar</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60-90 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 09 HR -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-hr);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M14 20c0-2.5 2-4.5 4.5-4.5S23 17.5 23 20"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>09 · People</div>
+          <div class="map-name">Human Resources</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">No automated HR system. Slow hiring and onboarding. Day-to-day employee management is manual and draining leadership bandwidth. With 45+ projects demanding talent across development, construction, property management, and sales, HR is a bottleneck to scale.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>AI-powered HRMS tracking every HR function end to end</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated resume screening and shortlist ranking by role fit</div>
+            <div class="rec-item"><span class="rec-num">03</span>AI onboarding copilot: new hires productive in days</div>
+            <div class="rec-item"><span class="rec-num">04</span>Drafted offer letters, PIPs, terminations, ESA-compliant notices</div>
+            <div class="rec-item"><span class="rec-num">05</span>Automated time-off, payroll, and benefits workflows</div>
+            <div class="rec-item"><span class="rec-num">06</span>Employee pulse tracking with weekly sentiment digests</div>
+            <div class="rec-item"><span class="rec-num">07</span>Compliance checks on every HR document before send</div>
+            <div class="rec-item"><span class="rec-num">08</span>Performance review summaries drafted from year-round notes</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add HR gaps: hiring velocity, onboarding issues, retention concerns, compliance risks…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add HRMS features, AI recruiting tools, or employee experience ideas your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Ahmad Mirza</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Critical</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30-60 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 10 ADMIN -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-admin);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>10 · Operations</div>
+          <div class="map-name">Administration</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Meeting overload. Scattered SOPs. Manual document routing. Executive assistants operating as human inboxes. Office admins across Elite and Brooklyn Construction working with different tools, fragmenting institutional memory.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>AI meeting notes and action-item extraction (Teams, Zoom)</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated travel, expense, and calendar coordination</div>
+            <div class="rec-item"><span class="rec-num">03</span>Document routing, e-sign follow-ups, deadline tracking</div>
+            <div class="rec-item"><span class="rec-num">04</span>Vendor contract summarization with risk flags</div>
+            <div class="rec-item"><span class="rec-num">05</span>Searchable knowledge base across every SOP and playbook</div>
+            <div class="rec-item"><span class="rec-num">06</span>Inbox triage and draft replies for executive assistants</div>
+            <div class="rec-item"><span class="rec-num">07</span>Automated weekly operational reports to leadership</div>
+            <div class="rec-item"><span class="rec-num">08</span>AI scheduler respecting priorities, timezones, blockers</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add admin gaps: tool sprawl, SOP fragmentation, meeting overhead, documentation issues…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI productivity tools, knowledge base systems, or workflow automations your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Alicia / Ana / Bree</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Medium</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 11 LEGAL -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-legal);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 3v18M6 8l6-3 6 3M4 14l2-6 2 6M16 14l2-6 2 6M3 20h18"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>11 · Compliance</div>
+          <div class="map-name">Legal</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Manual contract review across APS agreements, PPP documents, and vendor contracts. Reactive to regulatory changes (Tarion, HCRA, Ontario Planning Act, DFSA for Elite Capital). Legal becomes a bottleneck on deal velocity rather than an accelerator.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>Clause-by-clause contract review with risk flags</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated redlines against Elite standard templates</div>
+            <div class="rec-item"><span class="rec-num">03</span>Regulatory tracker: Tarion, HCRA, Planning Act, ESA, DFSA</div>
+            <div class="rec-item"><span class="rec-num">04</span>Claude-drafted NDAs, APS amendments, PPP, vendor agreements</div>
+            <div class="rec-item"><span class="rec-num">05</span>Litigation and claim summarization across matter history</div>
+            <div class="rec-item"><span class="rec-num">06</span>Privilege-aware document search across all legal matters</div>
+            <div class="rec-item"><span class="rec-num">07</span>Automated compliance checklists per project phase</div>
+            <div class="rec-item"><span class="rec-num">08</span>Purchaser correspondence pre-cleared for legal sensitivity</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add legal gaps: contract turnaround, regulatory tracking, dispute management, external counsel costs…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI legal tools, contract management, or compliance automations your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">External Counsel / Ahmad</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60 days</div></div>
+      </div>
+    </article>
+
+    <!-- ============================= -->
+    <!-- 12 IT & SECURITY -->
+    <!-- ============================= -->
+    <article class="dept-map reveal" style="--dept-color: var(--c-it);">
+      <div class="map-head">
+        <div class="map-icon-wrap">
+          <svg viewBox="0 0 24 24"><path d="M12 2L3 6v6c0 5 4 9 9 10 5-1 9-5 9-10V6l-9-4z"/><path d="M8 12l3 3 5-6"/></svg>
+        </div>
+        <div class="map-title-block">
+          <div class="map-tag"><span class="map-tag-dot"></span>12 · Infrastructure</div>
+          <div class="map-name">IT & Security</div>
+        </div>
+        <div class="map-badge">8 Initiatives</div>
+      </div>
+
+      <div class="map-body">
+        <div class="map-quad">
+          <div class="quad-label pain">Current Pain Point</div>
+          <div class="pain-text">Fragmented tech stack: QuickBooks, Procore, Builderlynx, Dayforce, Teams, Juniper. No centralized security posture across Elite Developments, Brooklyn Construction, and Elite Capital. AI adoption needs a governance backbone before scaling to protect investor data and DFSA compliance.</div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">AI Recommendations</div>
+          <div class="recs-grid">
+            <div class="rec-item"><span class="rec-num">01</span>AI-powered endpoint monitoring and threat detection</div>
+            <div class="rec-item"><span class="rec-num">02</span>Automated phishing detection across all company inboxes</div>
+            <div class="rec-item"><span class="rec-num">03</span>Access review automation: right person, right system, right time</div>
+            <div class="rec-item"><span class="rec-num">04</span>Role-personalized AI security awareness training</div>
+            <div class="rec-item"><span class="rec-num">05</span>Incident response playbooks drafted and updated by Claude</div>
+            <div class="rec-item"><span class="rec-num">06</span>Shadow IT discovery and SaaS spend rationalization</div>
+            <div class="rec-item"><span class="rec-num">07</span>AI governance layer for safe Claude and agent deployment</div>
+            <div class="rec-item"><span class="rec-num">08</span>Automated data classification and DLP (DFSA-ready)</div>
+          </div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Gaps</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add IT gaps: tool consolidation, security incidents, compliance concerns, data access issues…"></div>
+        </div>
+        <div class="map-quad">
+          <div class="quad-label">Team Input · Additional Recommendations</div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add cybersecurity tools, AI governance frameworks, or infrastructure ideas your team would prioritize…"></div>
+        </div>
+      </div>
+
+      <div class="map-metrics">
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">External IT / Ahmad</div></div>
+        <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Critical</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30 days</div></div>
+      </div>
+    </article>
+
+  </section>
+
+  <!-- ========== ELITE CAPITAL ========== -->
+  <section>
+    <div class="section-header reveal">
+      <div class="section-number">03 · THE INVESTOR LAYER</div>
+      <h2 class="section-title">Elite Capital. <em>Scaled by intelligence.</em></h2>
+      <p class="section-desc">
+        Elite Capital (DIFC) Limited, DFSA-authorized, provides international investors access to Canadian real assets through an exclusive pipeline of 45+ community-focused developments across Ontario. AI transforms the investor journey — from first touch to capital deployment to reporting — into a frictionless, intelligence-led experience.
+      </p>
+    </div>
+
+    <div class="capital-block reveal">
+      <div class="capital-tag">Elite Capital · 8 AI Initiatives</div>
+      <div class="capital-title">Real Assets. Real Returns. <em>Intelligent delivery.</em></div>
+      <div class="capital-desc">
+        Serving professional investors from Dubai and beyond, Elite Capital connects international capital to Ontario's 3.5M-home supply gap. AI amplifies every touchpoint: pipeline curation, due diligence, investor relations, fund administration, and DFSA regulatory compliance.
+      </div>
+
+      <div class="capital-grid">
+        <div class="capital-item">
+          <div class="capital-item-num">01</div>
+          <div class="capital-item-content">
+            <h4>AI-Powered Deal Curation</h4>
+            <p>Automated screening of the 45+ pipeline opportunities against investor mandates, risk profiles, and return targets.</p>
+          </div>
+        </div>
+        <div class="capital-item">
+          <div class="capital-item-num">02</div>
+          <div class="capital-item-content">
+            <h4>Due Diligence Acceleration</h4>
+            <p>Claude-assisted analysis of feasibility studies, zoning, entitlements, and market comps — weeks compressed to days.</p>
+          </div>
+        </div>
+        <div class="capital-item">
+          <div class="capital-item-num">03</div>
+          <div class="capital-item-content">
+            <h4>Investor CRM & Communication</h4>
+            <p>Personalized outreach at scale, automated fund updates, and Arabic/English bilingual investor materials generated on demand.</p>
+          </div>
+        </div>
+        <div class="capital-item">
+          <div class="capital-item-num">04</div>
+          <div class="capital-item-content">
+            <h4>DFSA Compliance Automation</h4>
+            <p>Regulatory monitoring, professional client verification workflows, and F009439 audit-ready documentation continuously maintained.</p>
+          </div>
+        </div>
+        <div class="capital-item">
+          <div class="capital-item-num">05</div>
+          <div class="capital-item-content">
+            <h4>Fund Performance Dashboards</h4>
+            <p>Real-time portfolio analytics across all Elite Capital assets — NOI, IRR, equity multiples delivered to investors instantly.</p>
+          </div>
+        </div>
+        <div class="capital-item">
+          <div class="capital-item-num">06</div>
+          <div class="capital-item-content">
+            <h4>Quarterly Reporting Engine</h4>
+            <p>AI-drafted investor reports, capital call notices, and distribution summaries — consistent quality, compressed timelines.</p>
+          </div>
+        </div>
+        <div class="capital-item">
+          <div class="capital-item-num">07</div>
+          <div class="capital-item-content">
+            <h4>Canadian Market Intelligence</h4>
+            <p>Continuous analysis of Ontario housing policy, 3.5M-home supply gap trends, and G7 investment positioning for investor memos.</p>
+          </div>
+        </div>
+        <div class="capital-item">
+          <div class="capital-item-num">08</div>
+          <div class="capital-item-content">
+            <h4>Cross-Border Tax & Structuring</h4>
+            <p>AI-assisted analysis of DIFC-Canada tax implications, currency hedging models, and investor-specific structuring memos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CLOSING ========== -->
+  <section class="closing reveal">
+    <p class="closing-quote">
+      "The question isn't whether AI transforms Canadian real estate development.<br>
+      It's whether <em>Elite</em> leads the transformation — or watches it from behind."
+    </p>
+    <div class="closing-attribution">Internal Strategy · Prepared by Ahmad Mirza · April 2026</div>
+  </section>
+
+  <footer>
+    <div>Elite Developments · Elite Capital (DIFC) Limited</div>
+    <div>Confidential · For Internal Discussion Only</div>
+  </footer>
+
+</div>
+
+<script>
+  function toggleTheme() {
+    const body = document.body;
+    const current = body.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    body.setAttribute('data-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+    document.getElementById('theme-label').textContent = next === 'dark' ? 'LIGHT MODE' : 'DARK MODE';
+    const icon = document.getElementById('theme-icon');
+    if (next === 'light') {
+      icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+    } else {
+      icon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+    }
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Save editable content to localStorage
+  document.querySelectorAll('.editable').forEach((el, i) => {
+    const key = 'elite-map-edit-' + i;
+    const saved = localStorage.getItem(key);
+    if (saved) el.textContent = saved;
+    el.addEventListener('input', () => {
+      localStorage.setItem(key, el.textContent);
+    });
+  });
+</script>
+
+</body>
+</html>

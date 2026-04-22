@@ -3,12 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elite Developments — AI Transformation Map 2026</title>
+<title>Elite Developments, AI Transformation Map 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  /* ============ THEME TOKENS ============ */
   :root[data-theme="dark"] {
     --bg: #06070A;
     --bg-elev: #0E1014;
@@ -25,8 +24,8 @@
     --text-faint: #5E5D56;
     --grid-line: rgba(212, 175, 92, 0.035);
     --pain-bg: rgba(212, 175, 92, 0.04);
-    --editable-bg: rgba(255, 255, 255, 0.02);
-    --editable-border: rgba(255, 255, 255, 0.1);
+    --editable-bg: rgba(255, 255, 255, 0.06);
+    --editable-border: rgba(255, 255, 255, 0.25);
   }
 
   :root[data-theme="light"] {
@@ -49,7 +48,6 @@
     --editable-border: rgba(0, 0, 0, 0.1);
   }
 
-  /* Department accent colors */
   :root {
     --c-marketing: #E94E77;
     --c-sales: #3B82F6;
@@ -72,7 +70,7 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 400;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -81,7 +79,6 @@
     transition: background 0.5s ease, color 0.5s ease;
   }
 
-  /* ============ ATMOSPHERIC BG ============ */
   .bg-grid {
     position: fixed;
     inset: 0;
@@ -113,7 +110,6 @@
     66% { transform: translate(-30px, 40px) scale(0.95); }
   }
 
-  /* ============ THEME TOGGLE ============ */
   .theme-toggle {
     position: fixed; top: 24px; right: 24px; z-index: 100;
     background: var(--bg-card); border: 1px solid var(--line); color: var(--text);
@@ -126,12 +122,103 @@
   .theme-toggle:hover { border-color: var(--gold); box-shadow: 0 0 20px var(--gold-glow); }
   .theme-toggle svg { width: 14px; height: 14px; stroke: var(--gold); stroke-width: 1.5; fill: none; }
 
+  /* ============ TOOLBAR ============ */
+  .toolbar {
+    position: fixed;
+    top: 24px;
+    left: 24px;
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .tb-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    color: var(--text);
+    padding: 10px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+  }
+
+  .tb-btn:hover {
+    border-color: var(--gold);
+    box-shadow: 0 0 16px var(--gold-glow);
+    color: var(--gold);
+  }
+
+  .tb-btn svg {
+    width: 12px; height: 12px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    fill: none;
+  }
+
+  .tb-btn.danger:hover {
+    border-color: #EF4444;
+    color: #EF4444;
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.3);
+  }
+
+  /* Global save indicator */
+  #save-indicator {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+    background: var(--bg-card);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 10px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(20px);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+    box-shadow: 0 0 24px var(--gold-glow);
+  }
+
+  #save-indicator.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #save-indicator::before {
+    content: '';
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  #file-input { display: none; }
+
+  @media (max-width: 768px) {
+    .toolbar { left: 16px; top: 16px; flex-wrap: wrap; }
+    .tb-btn { padding: 8px 10px; font-size: 9px; }
+  }
+
   .container {
     position: relative; z-index: 1;
     max-width: 1440px; margin: 0 auto; padding: 0 48px;
   }
 
-  /* ============ REVEAL ============ */
   .reveal {
     opacity: 0; transform: translateY(30px);
     transition: opacity 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -142,7 +229,6 @@
   .reveal.delay-3 { transition-delay: 0.24s; }
   .reveal.delay-4 { transition-delay: 0.32s; }
 
-  /* ============ COVER ============ */
   .cover {
     min-height: 100vh; display: flex; flex-direction: column;
     justify-content: space-between; padding: 48px 0; position: relative;
@@ -192,10 +278,16 @@
 
   h1.cover-title em {
     font-style: italic;
-    background: linear-gradient(135deg, var(--c-marketing), var(--c-sales), var(--c-accounting), var(--gold));
+    background: linear-gradient(135deg, #C7265C, #1E5FBF, #047857, #8B6D2E);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
     font-weight: 400;
+  }
+
+  :root[data-theme="dark"] h1.cover-title em {
+    background: linear-gradient(135deg, var(--c-marketing), var(--c-sales), var(--c-accounting), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .cover-subtitle {
@@ -226,7 +318,6 @@
     color: var(--text-faint);
   }
 
-  /* ============ SECTION HEADERS ============ */
   .section-header {
     padding: 140px 0 72px;
     border-top: 1px solid var(--line-soft);
@@ -258,7 +349,6 @@
     max-width: 720px; line-height: 1.65; font-weight: 300;
   }
 
-  /* ============ STATS ============ */
   .stats-grid {
     display: grid; grid-template-columns: repeat(4, 1fr);
     gap: 1px; background: var(--line-soft);
@@ -306,7 +396,6 @@
     border-top: 1px solid var(--line-soft);
   }
 
-  /* ============ DEPARTMENT MAP CARDS ============ */
   .dept-map {
     background: var(--bg-card);
     border: 1px solid var(--line-soft);
@@ -330,7 +419,6 @@
 
   .dept-map:hover::after { opacity: 0.12; }
 
-  /* Map header */
   .map-head {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -406,7 +494,6 @@
     background: transparent;
   }
 
-  /* Map body - 4 column layout */
   .map-body {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -451,70 +538,120 @@
     font-weight: 400;
   }
 
-  /* Recs list with color */
-  .recs-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 28px;
+  /* Updated rec list with benefit line */
+  .recs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .rec-item {
+  .rec-card {
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid var(--line-soft);
+    border-left: 2px solid var(--dept-color);
+    transition: all 0.3s ease;
+  }
+
+  :root[data-theme="light"] .rec-card {
+    background: rgba(0, 0, 0, 0.015);
+  }
+
+  .rec-card:hover {
+    background: rgba(255, 255, 255, 0.03);
+    transform: translateX(3px);
+  }
+
+  :root[data-theme="light"] .rec-card:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .rec-top {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    font-size: 13px;
-    line-height: 1.5;
-    color: var(--text);
-    padding: 4px 0;
-    transition: transform 0.3s ease;
+    margin-bottom: 6px;
   }
-
-  .rec-item:hover { transform: translateX(3px); }
 
   .rec-num {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10.5px;
     min-width: 22px;
-    font-weight: 500;
+    font-weight: 600;
     padding-top: 2px;
     color: var(--dept-color);
     letter-spacing: 0.05em;
   }
 
-  /* Editable sections */
+  .rec-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .rec-benefit {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    padding-left: 34px;
+    font-weight: 400;
+  }
+
   .editable {
     background: var(--editable-bg);
     border: 1px dashed var(--editable-border);
     padding: 16px 18px;
     min-height: 80px;
-    font-size: 13px;
-    color: var(--text-dim);
-    font-style: italic;
-    line-height: 1.6;
+    font-size: 14px;
+    color: var(--text);
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.65;
     transition: all 0.3s ease;
     outline: none;
+    caret-color: var(--dept-color);
   }
 
   .editable:hover, .editable:focus {
     background: var(--bg-card-hover);
     border-color: var(--dept-color);
+    border-style: solid;
     color: var(--text);
-    font-style: normal;
+    box-shadow: inset 0 0 0 1px var(--dept-color);
   }
 
   .editable:empty::before {
     content: attr(data-placeholder);
-    color: var(--text-faint);
+    color: var(--text-dim);
     font-style: italic;
+    font-weight: 400;
   }
 
-  /* Full-width body for mapping */
-  .map-body-full {
-    display: grid;
-    grid-template-columns: 1fr;
+  .editable-saved-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dept-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
-  /* Metrics strip */
+  .editable-saved-badge.visible { opacity: 1; }
+
+  .editable-saved-badge::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--dept-color);
+    box-shadow: 0 0 6px var(--dept-color);
+  }
+
   .map-metrics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -545,7 +682,6 @@
     letter-spacing: -0.01em;
   }
 
-  /* ============ ELITE CAPITAL ============ */
   .capital-block {
     margin: 56px 0;
     padding: 72px 56px;
@@ -591,29 +727,49 @@
 
   .capital-grid {
     display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 48px 56px; position: relative; z-index: 1;
+    gap: 32px; position: relative; z-index: 1;
   }
 
-  .capital-item { display: flex; gap: 18px; align-items: flex-start; }
+  .capital-item {
+    padding: 20px 22px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--line-soft);
+    border-left: 2px solid var(--gold);
+  }
+
+  :root[data-theme="light"] .capital-item {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .capital-item-top {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
 
   .capital-item-num {
-    font-family: 'Fraunces', serif; font-style: italic;
-    font-size: 24px; color: var(--gold);
-    line-height: 1; min-width: 36px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    min-width: 26px;
   }
 
   .capital-item-content h4 {
-    font-size: 14px; font-weight: 600;
-    color: var(--text); margin-bottom: 8px;
+    font-size: 14.5px; font-weight: 600;
+    color: var(--text);
     letter-spacing: -0.005em;
+    flex: 1;
   }
 
   .capital-item-content p {
-    font-size: 13px; color: var(--text-dim);
-    line-height: 1.55;
+    font-size: 12.5px; color: var(--text-dim);
+    line-height: 1.6;
+    padding-left: 40px;
   }
 
-  /* ============ CLOSING ============ */
   .closing {
     padding: 140px 0 100px;
     border-top: 1px solid var(--line-soft);
@@ -634,6 +790,12 @@
   }
 
   .closing-quote em {
+    background: linear-gradient(135deg, #C7265C, #1E5FBF, #047857, #8B6D2E);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  :root[data-theme="dark"] .closing-quote em {
     background: linear-gradient(135deg, var(--c-marketing), var(--c-sales), var(--c-accounting), var(--gold));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -653,11 +815,10 @@
     display: flex; justify-content: space-between;
   }
 
-  /* ============ RESPONSIVE ============ */
   @media (max-width: 1024px) {
     .map-head { grid-template-columns: auto 1fr; }
     .map-badge { grid-column: 1 / -1; }
-    .map-body, .recs-grid, .capital-grid, .stats-grid, .map-metrics { grid-template-columns: 1fr; }
+    .map-body, .capital-grid, .stats-grid, .map-metrics { grid-template-columns: 1fr; }
     .cover-meta { flex-direction: column; gap: 20px; }
   }
 
@@ -678,24 +839,39 @@
 
 </style>
 </head>
-<body data-theme="dark">
+<body data-theme="light">
 
 <div class="bg-grid"></div>
 <div class="bg-orb one"></div>
 <div class="bg-orb two"></div>
 <div class="bg-orb three"></div>
 
+<div class="toolbar">
+  <button class="tb-btn" onclick="exportInputs()" title="Download all team inputs as a JSON file">
+    <svg viewBox="0 0 24 24"><path d="M12 3v14M6 11l6 6 6-6M4 21h16"/></svg>
+    Export
+  </button>
+  <button class="tb-btn" onclick="document.getElementById('file-input').click()" title="Import previously exported inputs">
+    <svg viewBox="0 0 24 24"><path d="M12 21V7M6 13l6-6 6 6M4 3h16"/></svg>
+    Import
+  </button>
+  <button class="tb-btn danger" onclick="clearAllInputs()" title="Clear all saved inputs on this device">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+    Clear
+  </button>
+  <input type="file" id="file-input" accept=".json" onchange="importInputs(event)">
+</div>
+
 <button class="theme-toggle" onclick="toggleTheme()">
   <svg id="theme-icon" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="4"/>
-    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
   </svg>
-  <span id="theme-label">LIGHT MODE</span>
+  <span id="theme-label">DARK MODE</span>
 </button>
 
 <div class="container">
 
-  <!-- ========== COVER ========== -->
+  <!-- COVER -->
   <section class="cover">
     <div class="cover-top">
       <div class="live">
@@ -706,13 +882,13 @@
     </div>
 
     <div class="cover-main">
-      <div class="eyebrow reveal in-view">AI Transformation Map · 2026 Edition</div>
+      <div class="eyebrow reveal in-view">AI Transformation Map, 2026 Edition</div>
       <h1 class="cover-title reveal in-view delay-1">
         Every department.<br>
         <em>Mapped & Reinvented.</em>
       </h1>
       <p class="cover-subtitle reveal in-view delay-2">
-        A color-coded department mapping exercise showing how Claude, AI, and intelligent agents transform every function at Elite Developments and Elite Capital — with built-in space to capture your team's own gaps, ideas, and priorities.
+        A color coded department mapping exercise showing how Claude, AI, and intelligent agents transform every function at Elite Developments and Elite Capital, with built in space to capture your team's own gaps, ideas, and priorities.
       </p>
 
       <div class="cover-meta reveal in-view delay-3">
@@ -741,7 +917,7 @@
     </div>
   </section>
 
-  <!-- ========== EXECUTIVE SUMMARY ========== -->
+  <!-- SUMMARY -->
   <section>
     <div class="section-header reveal">
       <div class="section-number">01 · THE CASE</div>
@@ -775,19 +951,17 @@
     </div>
   </section>
 
-  <!-- ========== DEPARTMENT MAPS ========== -->
+  <!-- DEPARTMENTS -->
   <section>
     <div class="section-header reveal">
       <div class="section-number">02 · THE MAPPING EXERCISE</div>
       <h2 class="section-title">Department <em>by</em> department.</h2>
       <p class="section-desc">
-        Each department is mapped across four zones: the current pain point, AI recommendations, space for your own gaps, and space for additional ideas. Click any dotted section to add your own input. This is designed to live and evolve with your team.
+        Each department is mapped across four zones: the current pain point, AI recommendations with clear business benefits, space for your own gaps, and space for additional ideas. Click any dotted section to add your input. This is designed to live and evolve with your team.
       </p>
     </div>
 
-    <!-- ============================= -->
     <!-- 01 MARKETING -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-marketing);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -803,41 +977,63 @@
       <div class="map-body">
         <div class="map-quad">
           <div class="quad-label pain">Current Pain Point</div>
-          <div class="pain-text">Branding takes forever. Raw files sit idle before reaching market. No SEO, no paid ads, no centralized spend control. Ambrose, Riverview, 88 James, Parkline — each community marketed in isolation without a reusable engine.</div>
+          <div class="pain-text">Branding takes forever. Raw files sit idle before reaching market. No SEO, no paid ads, no centralized spend control. Ambrose, Riverview, 88 James, Parkline, each community marketed in isolation without a reusable engine.</div>
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>Raw to market-ready creative in hours, not weeks</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated email sequences per community launch</div>
-            <div class="rec-item"><span class="rec-num">03</span>SEO content engine for every project microsite</div>
-            <div class="rec-item"><span class="rec-num">04</span>AI-managed Google, Meta, LinkedIn campaigns with spend guardrails</div>
-            <div class="rec-item"><span class="rec-num">05</span>Unified marketing spend dashboard with anomaly alerts</div>
-            <div class="rec-item"><span class="rec-num">06</span>Ad variant generation and A/B testing pre-deployment</div>
-            <div class="rec-item"><span class="rec-num">07</span>Lead-to-deposit attribution across every channel</div>
-            <div class="rec-item"><span class="rec-num">08</span>Reusable launch playbook template per community type</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">Raw to market ready creative in hours, not weeks</span></div>
+              <div class="rec-benefit">Cuts campaign turnaround from 3 weeks to 48 hours so launches hit market while momentum is still there.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated email sequences per community launch</span></div>
+              <div class="rec-benefit">Keeps registrants warm automatically so no lead goes cold waiting on a manual send.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">SEO content engine for every project microsite</span></div>
+              <div class="rec-benefit">Generates organic search traffic for each community so we stop paying for leads we could earn for free.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">AI managed Google, Meta, LinkedIn campaigns with spend guardrails</span></div>
+              <div class="rec-benefit">Runs paid ads end to end with automatic budget caps so we capture new audiences without overspending.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Unified marketing spend dashboard with anomaly alerts</span></div>
+              <div class="rec-benefit">Gives leadership a single view of every marketing dollar across all communities so waste gets caught fast.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Ad variant generation and A/B testing pre deployment</span></div>
+              <div class="rec-benefit">Tests creative before full spend so winning ads get the budget and losing ones never launch.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Lead to deposit attribution across every channel</span></div>
+              <div class="rec-benefit">Shows exactly which channels produce buyers so marketing budget flows to proven sources.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Reusable launch playbook template per community type</span></div>
+              <div class="rec-benefit">Turns each launch into a repeatable system so new projects move faster with less reinvention.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add your team's observations on marketing gaps, bottlenecks, or specific pain points not captured above…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add your team's observations on marketing gaps, bottlenecks, or specific pain points not captured above."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI ideas, tools, or initiatives your team would prioritize for marketing…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI ideas, tools, or initiatives your team would prioritize for marketing."></div>
         </div>
       </div>
 
       <div class="map-metrics">
-        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Zharne / Terri</div></div>
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Zharne / New Hire</div></div>
         <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
-        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30-60 days</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30 to 60 days</div></div>
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 02 REAL ESTATE SALES -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-sales);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -853,28 +1049,52 @@
       <div class="map-body">
         <div class="map-quad">
           <div class="quad-label pain">Current Pain Point</div>
-          <div class="pain-text">Communication with purchasers and prospects is slow and inconsistent. The Ambrose sold out in three weeks, but every community should replicate that velocity. Warm leads cool while reps chase paperwork. Post-sale nurture through closing is manual and uneven.</div>
+          <div class="pain-text">Communication with purchasers and prospects is slow and inconsistent. The Ambrose sold out in three weeks, but every community should replicate that velocity. Warm leads cool while reps chase paperwork. Post sale nurture through closing is manual and uneven.</div>
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>24/7 AI chat concierge on every community landing page</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated lead qualification and nurture sequences</div>
-            <div class="rec-item"><span class="rec-num">03</span>Purchaser copilot: always-on construction milestone updates</div>
-            <div class="rec-item"><span class="rec-num">04</span>Draft contracts, amendments, waivers in minutes</div>
-            <div class="rec-item"><span class="rec-num">05</span>Suite availability and pricing Q&A via Claude</div>
-            <div class="rec-item"><span class="rec-num">06</span>Call recording analysis with coaching insights per rep</div>
-            <div class="rec-item"><span class="rec-num">07</span>Weekly pipeline digests with deal-stage forecasts</div>
-            <div class="rec-item"><span class="rec-num">08</span>Post-sale nurture automation from firm to closing</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">24/7 AI chat concierge on every community landing page</span></div>
+              <div class="rec-benefit">Captures and qualifies leads around the clock so nothing is lost overnight or on weekends.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated lead qualification and nurture sequences</span></div>
+              <div class="rec-benefit">Sorts hot leads from tire kickers so sales reps spend time only on buyers ready to sign.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">Purchaser copilot with always on construction milestone updates</span></div>
+              <div class="rec-benefit">Keeps buyers informed between firm and closing so they stay confident and stop calling for status.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">Draft contracts, amendments, waivers in minutes</span></div>
+              <div class="rec-benefit">Turns deal paperwork around the same day so we close faster and free reps to sell.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Suite availability and pricing Q and A via Claude</span></div>
+              <div class="rec-benefit">Gives every rep instant accurate answers so no deal stalls waiting on the sales coordinator.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Call recording analysis with coaching insights per rep</span></div>
+              <div class="rec-benefit">Identifies what winning calls sound like so the whole team rises to the level of the best performer.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Weekly pipeline digests with deal stage forecasts</span></div>
+              <div class="rec-benefit">Gives leadership visibility into the revenue pipeline so decisions happen on data, not guesswork.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Post sale nurture automation from firm to closing</span></div>
+              <div class="rec-benefit">Reduces buyer anxiety and deal fall through so more firmed sales actually close.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add your team's observations on sales gaps, communication breakdowns, or lost-lead patterns…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add your team's observations on sales gaps, communication breakdowns, or lost lead patterns."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI ideas or sales enablement tools your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI ideas or sales enablement tools your team would prioritize."></div>
         </div>
       </div>
 
@@ -885,9 +1105,7 @@
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 03 ACCOUNTING -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-accounting);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -903,41 +1121,63 @@
       <div class="map-body">
         <div class="map-quad">
           <div class="quad-label pain">Current Pain Point</div>
-          <div class="pain-text">Accounting spends massive hours in Excel consolidating monthly and yearly financials, tax work, and reporting across 45+ projects and 30+ properties. E&Y expects clean inputs, but the team is firefighting spreadsheets instead of analyzing performance. Cost-control frameworks lose efficiency at this scale.</div>
+          <div class="pain-text">Accounting spends massive hours in Excel consolidating monthly and yearly financials, tax work, and reporting across 45+ projects and 30+ properties. E&Y expects clean inputs, but the team is firefighting spreadsheets instead of analyzing performance. Cost control frameworks lose efficiency at this scale.</div>
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>AI monthly close automation across all 45+ entities</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated Excel consolidation from QuickBooks, Procore, Dayforce</div>
-            <div class="rec-item"><span class="rec-num">03</span>Claude-drafted variance analysis and exception flagging</div>
-            <div class="rec-item"><span class="rec-num">04</span>Tax work automation for 30+ properties with CRA compliance</div>
-            <div class="rec-item"><span class="rec-num">05</span>AI-generated E&Y-ready reporting packs (70% prep reduction)</div>
-            <div class="rec-item"><span class="rec-num">06</span>Fixed-price contract tracking and cost-to-complete forecasting</div>
-            <div class="rec-item"><span class="rec-num">07</span>Automated AR/AP, invoice capture, vendor payment workflows</div>
-            <div class="rec-item"><span class="rec-num">08</span>Real-time portfolio P&L dashboard for leadership and investors</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">AI monthly close automation across all 45+ entities</span></div>
+              <div class="rec-benefit">Cuts monthly close from weeks to days so the team analyzes numbers instead of compiling them.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated Excel consolidation from QuickBooks, Procore, Dayforce</span></div>
+              <div class="rec-benefit">Pulls data across every system automatically so manual spreadsheet merging becomes unnecessary.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">Claude drafted variance analysis and exception flagging</span></div>
+              <div class="rec-benefit">Surfaces cost overruns the moment they appear so leadership catches issues before they compound.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">Tax work automation for 30+ properties with CRA compliance</span></div>
+              <div class="rec-benefit">Streamlines property tax filings so we stay compliant without burning out the controller every year end.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">AI generated E and Y ready reporting packs</span></div>
+              <div class="rec-benefit">Reduces audit prep time by roughly 70 percent so audits close faster and cheaper.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Fixed price contract tracking and cost to complete forecasting</span></div>
+              <div class="rec-benefit">Forecasts project financial health in real time so we protect margins before they slip.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Automated AR and AP, invoice capture, vendor payment workflows</span></div>
+              <div class="rec-benefit">Eliminates manual invoice entry so cash flow is accurate and vendor relationships stay clean.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Real time portfolio P and L dashboard for leadership and investors</span></div>
+              <div class="rec-benefit">Delivers live financial performance across the portfolio so decisions are data driven, not reactive.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add specific accounting pain points: reconciliation issues, reporting delays, tax complexity, audit prep burdens…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add specific accounting pain points: reconciliation issues, reporting delays, tax complexity, audit prep burdens."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI finance tools, automations, or dashboards your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI finance tools, automations, or dashboards your team would prioritize."></div>
         </div>
       </div>
 
       <div class="map-metrics">
         <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Tameem / Basir</div></div>
         <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Critical</div></div>
-        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60-90 days</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60 to 90 days</div></div>
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 04 DEVELOPMENT -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-development);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -953,28 +1193,52 @@
       <div class="map-body">
         <div class="map-quad">
           <div class="quad-label pain">Current Pain Point</div>
-          <div class="pain-text">Project timelines drag. Tracking across 45+ active projects is fragmented. Team skews junior — authority and follow-ups are weak. Pre-development, zoning, and permitting readiness lags behind Elite Capital's investor-facing pipeline promises.</div>
+          <div class="pain-text">Project timelines drag. Tracking across 45+ active projects is fragmented. Team skews junior, authority and follow ups are weak. Pre development, zoning, and permitting readiness lags behind Elite Capital's investor facing pipeline promises.</div>
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>AI project tracker consolidating 45+ projects in one view</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated escalation when milestones stall past threshold</div>
-            <div class="rec-item"><span class="rec-num">03</span>Training library for junior staff: institutional memory on demand</div>
-            <div class="rec-item"><span class="rec-num">04</span>AI feasibility and zoning analysis, shovel-ready in days</div>
-            <div class="rec-item"><span class="rec-num">05</span>Automated pro forma drafting and sensitivity analysis</div>
-            <div class="rec-item"><span class="rec-num">06</span>Municipal council agenda and decision-log summaries</div>
-            <div class="rec-item"><span class="rec-num">07</span>Planning justifications drafted from site inputs and comps</div>
-            <div class="rec-item"><span class="rec-num">08</span>Weekly project readiness scorecards for leadership</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">AI project tracker consolidating 45+ projects in one view</span></div>
+              <div class="rec-benefit">Replaces scattered tracking with one source of truth so leadership sees every project at once.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated escalation when milestones stall past threshold</span></div>
+              <div class="rec-benefit">Flags delays the moment they slip so issues are resolved before they hit investors.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">Training library for junior staff with institutional memory on demand</span></div>
+              <div class="rec-benefit">Gives junior team members instant access to senior knowledge so they ramp faster and make fewer errors.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">AI feasibility and zoning analysis, shovel ready in days</span></div>
+              <div class="rec-benefit">Compresses deal evaluation from months to days so we win more opportunities and say no faster on bad ones.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Automated pro forma drafting and sensitivity analysis</span></div>
+              <div class="rec-benefit">Produces investor ready financial models in hours so every deal gets evaluated with rigor.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Municipal council agenda and decision log summaries</span></div>
+              <div class="rec-benefit">Tracks every council meeting across our markets so we never miss a zoning change or approval risk.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Planning justifications drafted from site inputs and comps</span></div>
+              <div class="rec-benefit">Produces polished planning submissions faster so approvals move quicker and costs drop.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Weekly project readiness scorecards for leadership</span></div>
+              <div class="rec-benefit">Shows exactly which projects are on track and which need intervention so leadership focus is sharp.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add development gaps: permitting delays, team capacity, approvals tracking, site-specific issues…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add development gaps: permitting delays, team capacity, approvals tracking, site specific issues."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI tools for zoning, pro formas, entitlements, or project management your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI tools for zoning, pro formas, entitlements, or project management your team would prioritize."></div>
         </div>
       </div>
 
@@ -985,9 +1249,7 @@
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 05 PROPERTY MANAGEMENT -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-property);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -1007,37 +1269,59 @@
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>AI tenant concierge for maintenance, rent inquiries, renewals</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated lease renewal workflows and rent escalation tracking</div>
-            <div class="rec-item"><span class="rec-num">03</span>Predictive maintenance flagging across all 30+ properties</div>
-            <div class="rec-item"><span class="rec-num">04</span>AI-drafted tenant communications, notices, legal correspondence</div>
-            <div class="rec-item"><span class="rec-num">05</span>Real-time occupancy and rent-roll dashboards for leadership</div>
-            <div class="rec-item"><span class="rec-num">06</span>Smart vendor dispatch with performance ranking per property</div>
-            <div class="rec-item"><span class="rec-num">07</span>Automated arrears management and payment reminder sequences</div>
-            <div class="rec-item"><span class="rec-num">08</span>Portfolio-level NOI optimization insights and benchmarking</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">AI tenant concierge for maintenance, rent inquiries, renewals</span></div>
+              <div class="rec-benefit">Handles routine tenant requests automatically so staff focus on revenue generating work.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated lease renewal workflows and rent escalation tracking</span></div>
+              <div class="rec-benefit">Triggers renewals on schedule with correct rent increases so we protect NOI without manual chase.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">Predictive maintenance flagging across all 30+ properties</span></div>
+              <div class="rec-benefit">Catches issues before they become expensive emergencies so capex stays controlled.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">AI drafted tenant communications, notices, legal correspondence</span></div>
+              <div class="rec-benefit">Keeps every tenant interaction on brand and legally sound so we minimize liability and complaints.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Real time occupancy and rent roll dashboards for leadership</span></div>
+              <div class="rec-benefit">Gives leadership live portfolio performance so asset management decisions move fast.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Smart vendor dispatch with performance ranking per property</span></div>
+              <div class="rec-benefit">Sends work to the best vendors automatically so service quality rises and cost drops.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Automated arrears management and payment reminder sequences</span></div>
+              <div class="rec-benefit">Collects rent on time without awkward conversations so cash flow stays healthy.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Portfolio level NOI optimization insights and benchmarking</span></div>
+              <div class="rec-benefit">Identifies underperforming assets so we take action that directly improves returns.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add property management gaps: tenant turnover, maintenance response times, vendor management…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add property management gaps: tenant turnover, maintenance response times, vendor management."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI property management tools, tenant portals, or operational ideas your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI property management tools, tenant portals, or operational ideas your team would prioritize."></div>
         </div>
       </div>
 
       <div class="map-metrics">
         <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Maisome / Jimmy</div></div>
         <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
-        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60-90 days</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60 to 90 days</div></div>
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 06 WARRANTY -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-warranty);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -1053,28 +1337,52 @@
       <div class="map-body">
         <div class="map-quad">
           <div class="quad-label pain">Current Pain Point</div>
-          <div class="pain-text">With The Ambrose delivered, Riverview completing in 2026, and Parkline coming online, warranty volume will compound fast. Current homeowner communication is reactive. Systemic defects surface too late. Tarion exposure is under-managed at the portfolio level.</div>
+          <div class="pain-text">With The Ambrose delivered, Riverview completing in 2026, and Parkline coming online, warranty volume will compound fast. Current homeowner communication is reactive. Systemic defects surface too late. Tarion exposure is under managed at the portfolio level.</div>
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>Triage tickets by urgency, warranty item, Tarion category</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated first-response replies to common queries</div>
-            <div class="rec-item"><span class="rec-num">03</span>Pattern detection across defects to catch systemic issues early</div>
-            <div class="rec-item"><span class="rec-num">04</span>Claude-drafted warranty letters and close-out summaries</div>
-            <div class="rec-item"><span class="rec-num">05</span>Predictive maintenance flags from repeat-call data</div>
-            <div class="rec-item"><span class="rec-num">06</span>Homeowner sentiment tracking from email and call logs</div>
-            <div class="rec-item"><span class="rec-num">07</span>Automated PDI checklist and follow-up sequencing</div>
-            <div class="rec-item"><span class="rec-num">08</span>Tarion knowledge base searchable by staff in seconds</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">Triage tickets by urgency, warranty item, Tarion category</span></div>
+              <div class="rec-benefit">Routes every issue to the right person instantly so response times drop and complaints shrink.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated first response replies to common queries</span></div>
+              <div class="rec-benefit">Acknowledges every homeowner within minutes so small issues do not become escalations.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">Pattern detection across defects to catch systemic issues early</span></div>
+              <div class="rec-benefit">Spots recurring defects before they snowball so we fix upstream and limit Tarion exposure.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">Claude drafted warranty letters and close out summaries</span></div>
+              <div class="rec-benefit">Produces consistent professional correspondence so our warranty brand reflects the Elite standard.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Predictive maintenance flags from repeat call data</span></div>
+              <div class="rec-benefit">Predicts which units need proactive attention so we head off issues before homeowners call.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Homeowner sentiment tracking from email and call logs</span></div>
+              <div class="rec-benefit">Surfaces unhappy homeowners before they post online so we recover relationships early.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Automated PDI checklist and follow up sequencing</span></div>
+              <div class="rec-benefit">Keeps pre delivery inspections on track so closings happen smoothly with fewer surprises.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Tarion knowledge base searchable by staff in seconds</span></div>
+              <div class="rec-benefit">Puts Tarion regulations at everyone's fingertips so compliance never depends on one person's memory.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add warranty gaps: response delays, defect tracking, Tarion exposure, homeowner complaints…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add warranty gaps: response delays, defect tracking, Tarion exposure, homeowner complaints."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI warranty tools, homeowner portals, or service automation your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI warranty tools, homeowner portals, or service automation your team would prioritize."></div>
         </div>
       </div>
 
@@ -1085,9 +1393,7 @@
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 07 PARTNER RELATIONS -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-partner);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -1103,41 +1409,63 @@
       <div class="map-body">
         <div class="map-quad">
           <div class="quad-label pain">Current Pain Point</div>
-          <div class="pain-text">Juniper was signed but never activated. No systematic partner management. Communication with brokers, municipalities (Niagara Falls PPP), and joint-venture partners is inconsistent. New opportunities like Parkline-style partnerships slip through the cracks.</div>
+          <div class="pain-text">Juniper was signed but never activated. No systematic partner management. Communication with brokers, municipalities (Niagara Falls PPP), and joint venture partners is inconsistent. New opportunities like Parkline style partnerships slip through the cracks.</div>
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>Full Juniper rollout with AI-assisted adoption and training</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated broker communication sequences per community</div>
-            <div class="rec-item"><span class="rec-num">03</span>AI-generated partner performance scorecards monthly</div>
-            <div class="rec-item"><span class="rec-num">04</span>Claude-assisted co-broker and JV contract review</div>
-            <div class="rec-item"><span class="rec-num">05</span>Personalized outreach at scale: every broker feels prioritized</div>
-            <div class="rec-item"><span class="rec-num">06</span>Municipal partnership radar (Parkline-style PPP opportunities)</div>
-            <div class="rec-item"><span class="rec-num">07</span>Automated reporting packs for top-tier partners and investors</div>
-            <div class="rec-item"><span class="rec-num">08</span>AI-drafted event invites, follow-ups, thank-you sequences</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">Full Juniper rollout with AI assisted adoption and training</span></div>
+              <div class="rec-benefit">Activates the platform we already paid for so our partner investment finally produces returns.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated broker communication sequences per community</span></div>
+              <div class="rec-benefit">Keeps every broker in the loop on new inventory so we sell faster through our partner network.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">AI generated partner performance scorecards monthly</span></div>
+              <div class="rec-benefit">Shows which brokers produce so we reward top performers and prune deadweight.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">Claude assisted co broker and JV contract review</span></div>
+              <div class="rec-benefit">Accelerates deal structuring so new partnerships get signed while momentum exists.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Personalized outreach at scale with every broker feeling prioritized</span></div>
+              <div class="rec-benefit">Makes every partner feel valued so retention and referral volume both climb.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Municipal partnership radar for Parkline style PPP opportunities</span></div>
+              <div class="rec-benefit">Spots the next public private partnership early so we secure land and terms ahead of competitors.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Automated reporting packs for top tier partners and investors</span></div>
+              <div class="rec-benefit">Keeps key relationships strong with consistent professional updates so trust compounds over time.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">AI drafted event invites, follow ups, thank you sequences</span></div>
+              <div class="rec-benefit">Professionalizes every partner touchpoint so Elite feels like a premium partner to work with.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add partnership gaps: broker onboarding, Juniper rollout blockers, PPP opportunity evaluation…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add partnership gaps: broker onboarding, Juniper rollout blockers, PPP opportunity evaluation."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI partner management tools, CRM ideas, or partnership models your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI partner management tools, CRM ideas, or partnership models your team would prioritize."></div>
         </div>
       </div>
 
       <div class="map-metrics">
-        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Neelo / Leen</div></div>
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Neelo / Ana</div></div>
         <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
-        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30-60 days</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30 to 60 days</div></div>
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 08 CONSTRUCTION -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-construction);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -1153,41 +1481,63 @@
       <div class="map-body">
         <div class="map-quad">
           <div class="quad-label pain">Current Pain Point</div>
-          <div class="pain-text">Manual site reporting across Brooklyn Construction-led projects. Reactive issue tracking. Inconsistent subcontractor follow-through. With Parkline under construction and multiple projects concurrent, delays compound before they become visible to leadership.</div>
+          <div class="pain-text">Manual site reporting across Brooklyn Construction led projects. Reactive issue tracking. Inconsistent subcontractor follow through. With Parkline under construction and multiple projects concurrent, delays compound before they become visible to leadership.</div>
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>AI-assisted daily site progress reports from photos and logs</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated RFI drafting and contractor follow-up sequences</div>
-            <div class="rec-item"><span class="rec-num">03</span>Schedule risk analysis: slippage flagged before compounding</div>
-            <div class="rec-item"><span class="rec-num">04</span>Safety audit summaries from site inspection notes</div>
-            <div class="rec-item"><span class="rec-num">05</span>Material price forecasting and waste-reduction insights</div>
-            <div class="rec-item"><span class="rec-num">06</span>Subcontractor scorecards: reliability, quality, speed</div>
-            <div class="rec-item"><span class="rec-num">07</span>Predictive delay modeling across concurrent projects</div>
-            <div class="rec-item"><span class="rec-num">08</span>Claude-drafted change orders, deficiency reports, close-outs</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">AI assisted daily site progress reports from photos and logs</span></div>
+              <div class="rec-benefit">Turns site photos into structured reports automatically so site supers run sites, not paperwork.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated RFI drafting and contractor follow up sequences</span></div>
+              <div class="rec-benefit">Keeps RFIs moving so construction stays unblocked and timelines hold.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">Schedule risk analysis with slippage flagged before compounding</span></div>
+              <div class="rec-benefit">Warns leadership of schedule risk early so we intervene before penalties or investor concerns hit.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">Safety audit summaries from site inspection notes</span></div>
+              <div class="rec-benefit">Captures and acts on safety findings so incidents drop and WSIB costs stay low.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Material price forecasting and waste reduction insights</span></div>
+              <div class="rec-benefit">Predicts material costs and surfaces waste so budgets stay intact across concurrent projects.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Subcontractor scorecards ranking reliability, quality, speed</span></div>
+              <div class="rec-benefit">Shows exactly which trades deliver so the best ones win repeat work and the worst get replaced.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Predictive delay modeling across concurrent projects</span></div>
+              <div class="rec-benefit">Models delay risk across the portfolio so we balance resources where they matter most.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Claude drafted change orders, deficiency reports, close outs</span></div>
+              <div class="rec-benefit">Turns documentation around in hours so projects close cleanly without admin lag.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add construction gaps: subcontractor issues, schedule slippage, safety incidents, material costs…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add construction gaps: subcontractor issues, schedule slippage, safety incidents, material costs."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI construction tools, Procore integrations, or site automation your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI construction tools, Procore integrations, or site automation your team would prioritize."></div>
         </div>
       </div>
 
       <div class="map-metrics">
-        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Marko / Igor / Yasar</div></div>
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Marko</div></div>
         <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
-        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60-90 days</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60 to 90 days</div></div>
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 09 HR -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-hr);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -1203,41 +1553,63 @@
       <div class="map-body">
         <div class="map-quad">
           <div class="quad-label pain">Current Pain Point</div>
-          <div class="pain-text">No automated HR system. Slow hiring and onboarding. Day-to-day employee management is manual and draining leadership bandwidth. With 45+ projects demanding talent across development, construction, property management, and sales, HR is a bottleneck to scale.</div>
+          <div class="pain-text">No automated HR system. Slow hiring and onboarding. Day to day employee management is manual and draining leadership bandwidth. With 45+ projects demanding talent across development, construction, property management, and sales, HR is a bottleneck to scale.</div>
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>AI-powered HRMS tracking every HR function end to end</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated resume screening and shortlist ranking by role fit</div>
-            <div class="rec-item"><span class="rec-num">03</span>AI onboarding copilot: new hires productive in days</div>
-            <div class="rec-item"><span class="rec-num">04</span>Drafted offer letters, PIPs, terminations, ESA-compliant notices</div>
-            <div class="rec-item"><span class="rec-num">05</span>Automated time-off, payroll, and benefits workflows</div>
-            <div class="rec-item"><span class="rec-num">06</span>Employee pulse tracking with weekly sentiment digests</div>
-            <div class="rec-item"><span class="rec-num">07</span>Compliance checks on every HR document before send</div>
-            <div class="rec-item"><span class="rec-num">08</span>Performance review summaries drafted from year-round notes</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">AI powered HRMS tracking every HR function end to end</span></div>
+              <div class="rec-benefit">Centralizes all HR workflows into one system so nothing falls through the cracks as we scale.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated resume screening and shortlist ranking by role fit</span></div>
+              <div class="rec-benefit">Surfaces the best candidates in minutes so we fill roles in weeks instead of months.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">AI onboarding copilot with new hires productive in days</span></div>
+              <div class="rec-benefit">Gets new hires contributing faster so the cost of vacancy drops across every department.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">Drafted offer letters, PIPs, terminations, ESA compliant notices</span></div>
+              <div class="rec-benefit">Produces clean compliant HR documents in minutes so legal risk drops and managers stop waiting.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Automated time off, payroll, and benefits workflows</span></div>
+              <div class="rec-benefit">Eliminates manual payroll admin so employees get paid right and HR reclaims hours per week.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Employee pulse tracking with weekly sentiment digests</span></div>
+              <div class="rec-benefit">Catches morale issues before they become resignations so retention climbs and costs drop.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Compliance checks on every HR document before send</span></div>
+              <div class="rec-benefit">Flags risky language before it leaves HR so we never face an ESA or wrongful dismissal claim we could have prevented.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Performance review summaries drafted from year round notes</span></div>
+              <div class="rec-benefit">Turns review season from a dreaded month into a streamlined week for every manager.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add HR gaps: hiring velocity, onboarding issues, retention concerns, compliance risks…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add HR gaps: hiring velocity, onboarding issues, retention concerns, compliance risks."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add HRMS features, AI recruiting tools, or employee experience ideas your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add HRMS features, AI recruiting tools, or employee experience ideas your team would prioritize."></div>
         </div>
       </div>
 
       <div class="map-metrics">
         <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Ahmad Mirza</div></div>
         <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Critical</div></div>
-        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30-60 days</div></div>
+        <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30 to 60 days</div></div>
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 10 ADMIN -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-admin);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -1257,37 +1629,59 @@
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>AI meeting notes and action-item extraction (Teams, Zoom)</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated travel, expense, and calendar coordination</div>
-            <div class="rec-item"><span class="rec-num">03</span>Document routing, e-sign follow-ups, deadline tracking</div>
-            <div class="rec-item"><span class="rec-num">04</span>Vendor contract summarization with risk flags</div>
-            <div class="rec-item"><span class="rec-num">05</span>Searchable knowledge base across every SOP and playbook</div>
-            <div class="rec-item"><span class="rec-num">06</span>Inbox triage and draft replies for executive assistants</div>
-            <div class="rec-item"><span class="rec-num">07</span>Automated weekly operational reports to leadership</div>
-            <div class="rec-item"><span class="rec-num">08</span>AI scheduler respecting priorities, timezones, blockers</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">AI meeting notes and action item extraction across Teams and Zoom</span></div>
+              <div class="rec-benefit">Captures every meeting into clean notes automatically so nothing promised gets forgotten.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated travel, expense, and calendar coordination</span></div>
+              <div class="rec-benefit">Handles logistics automatically so EAs focus on high leverage work instead of admin.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">Document routing, e sign follow ups, deadline tracking</span></div>
+              <div class="rec-benefit">Moves documents through approvals automatically so deals and contracts never stall in someone's inbox.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">Vendor contract summarization with risk flags</span></div>
+              <div class="rec-benefit">Surfaces key terms and risks from every vendor contract in seconds so leadership signs with confidence.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Searchable knowledge base across every SOP and playbook</span></div>
+              <div class="rec-benefit">Puts company knowledge at everyone's fingertips so tribal knowledge stops walking out the door.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Inbox triage and draft replies for executive assistants</span></div>
+              <div class="rec-benefit">Clears EA inboxes faster so leadership gets more real support and fewer forwarded emails.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Automated weekly operational reports to leadership</span></div>
+              <div class="rec-benefit">Delivers a consistent ops update every Monday so Hamid and Samim start the week informed.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">AI scheduler respecting priorities, timezones, blockers</span></div>
+              <div class="rec-benefit">Finds meeting times across busy calendars in seconds so scheduling stops eating hours each week.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add admin gaps: tool sprawl, SOP fragmentation, meeting overhead, documentation issues…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add admin gaps: tool sprawl, SOP fragmentation, meeting overhead, documentation issues."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI productivity tools, knowledge base systems, or workflow automations your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI productivity tools, knowledge base systems, or workflow automations your team would prioritize."></div>
         </div>
       </div>
 
       <div class="map-metrics">
-        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Alicia / Ana / Bree</div></div>
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Alicia / Bree / Ana</div></div>
         <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Medium</div></div>
         <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30 days</div></div>
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 11 LEGAL -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-legal);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -1307,37 +1701,59 @@
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>Clause-by-clause contract review with risk flags</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated redlines against Elite standard templates</div>
-            <div class="rec-item"><span class="rec-num">03</span>Regulatory tracker: Tarion, HCRA, Planning Act, ESA, DFSA</div>
-            <div class="rec-item"><span class="rec-num">04</span>Claude-drafted NDAs, APS amendments, PPP, vendor agreements</div>
-            <div class="rec-item"><span class="rec-num">05</span>Litigation and claim summarization across matter history</div>
-            <div class="rec-item"><span class="rec-num">06</span>Privilege-aware document search across all legal matters</div>
-            <div class="rec-item"><span class="rec-num">07</span>Automated compliance checklists per project phase</div>
-            <div class="rec-item"><span class="rec-num">08</span>Purchaser correspondence pre-cleared for legal sensitivity</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">Clause by clause contract review with risk flags</span></div>
+              <div class="rec-benefit">Identifies risky contract terms in minutes so deals close faster without missing red flags.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated redlines against Elite standard templates</span></div>
+              <div class="rec-benefit">Marks every deviation from our standards so nothing non standard slips through uncaught.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">Regulatory tracker for Tarion, HCRA, Planning Act, ESA, DFSA</span></div>
+              <div class="rec-benefit">Monitors every regulator relevant to Elite so rule changes reach us before they cause problems.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">Claude drafted NDAs, APS amendments, PPP, vendor agreements</span></div>
+              <div class="rec-benefit">Turns contract drafting around same day so deal velocity rises without more legal headcount.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Litigation and claim summarization across matter history</span></div>
+              <div class="rec-benefit">Produces quick briefs on any active matter so leadership stays informed without reading case files.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Privilege aware document search across all legal matters</span></div>
+              <div class="rec-benefit">Searches our legal history safely so we reuse past work and stop paying counsel to redo it.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">Automated compliance checklists per project phase</span></div>
+              <div class="rec-benefit">Ensures every project hits its compliance gates so approvals and closings never get held up.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Purchaser correspondence pre cleared for legal sensitivity</span></div>
+              <div class="rec-benefit">Prevents emails that create legal exposure so sales moves fast without creating future headaches.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add legal gaps: contract turnaround, regulatory tracking, dispute management, external counsel costs…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add legal gaps: contract turnaround, regulatory tracking, dispute management, external counsel costs."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add AI legal tools, contract management, or compliance automations your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add AI legal tools, contract management, or compliance automations your team would prioritize."></div>
         </div>
       </div>
 
       <div class="map-metrics">
-        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">External Counsel / Ahmad</div></div>
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Sharoon / Lindsay / Nic / Ahmad</div></div>
         <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">High</div></div>
         <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">60 days</div></div>
       </div>
     </article>
 
-    <!-- ============================= -->
     <!-- 12 IT & SECURITY -->
-    <!-- ============================= -->
     <article class="dept-map reveal" style="--dept-color: var(--c-it);">
       <div class="map-head">
         <div class="map-icon-wrap">
@@ -1357,29 +1773,53 @@
         </div>
         <div class="map-quad">
           <div class="quad-label">AI Recommendations</div>
-          <div class="recs-grid">
-            <div class="rec-item"><span class="rec-num">01</span>AI-powered endpoint monitoring and threat detection</div>
-            <div class="rec-item"><span class="rec-num">02</span>Automated phishing detection across all company inboxes</div>
-            <div class="rec-item"><span class="rec-num">03</span>Access review automation: right person, right system, right time</div>
-            <div class="rec-item"><span class="rec-num">04</span>Role-personalized AI security awareness training</div>
-            <div class="rec-item"><span class="rec-num">05</span>Incident response playbooks drafted and updated by Claude</div>
-            <div class="rec-item"><span class="rec-num">06</span>Shadow IT discovery and SaaS spend rationalization</div>
-            <div class="rec-item"><span class="rec-num">07</span>AI governance layer for safe Claude and agent deployment</div>
-            <div class="rec-item"><span class="rec-num">08</span>Automated data classification and DLP (DFSA-ready)</div>
+          <div class="recs-list">
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">01</span><span class="rec-title">AI powered endpoint monitoring and threat detection</span></div>
+              <div class="rec-benefit">Watches every device 24/7 so cyber threats get blocked before they reach sensitive data.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">02</span><span class="rec-title">Automated phishing detection across all company inboxes</span></div>
+              <div class="rec-benefit">Catches phishing before anyone clicks so we avoid the top cause of corporate breaches.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">03</span><span class="rec-title">Access review automation with the right person, system, time</span></div>
+              <div class="rec-benefit">Ensures only the right people have access to the right systems so data leakage risk stays low.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">04</span><span class="rec-title">Role personalized AI security awareness training</span></div>
+              <div class="rec-benefit">Delivers targeted training by role so employees learn what matters to their actual work.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">05</span><span class="rec-title">Incident response playbooks drafted and updated by Claude</span></div>
+              <div class="rec-benefit">Keeps our breach response plan current so if something happens we move fast and contain damage.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">06</span><span class="rec-title">Shadow IT discovery and SaaS spend rationalization</span></div>
+              <div class="rec-benefit">Finds unused or duplicate software so we cut wasted spend and close security gaps at the same time.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">07</span><span class="rec-title">AI governance layer for safe Claude and agent deployment</span></div>
+              <div class="rec-benefit">Lets us adopt AI across the org with confidence so innovation does not create new risks.</div>
+            </div>
+            <div class="rec-card">
+              <div class="rec-top"><span class="rec-num">08</span><span class="rec-title">Automated data classification and DLP (DFSA ready)</span></div>
+              <div class="rec-benefit">Classifies sensitive data and prevents leaks so DFSA and CRA compliance stays airtight.</div>
+            </div>
           </div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Gaps</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add IT gaps: tool consolidation, security incidents, compliance concerns, data access issues…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add IT gaps: tool consolidation, security incidents, compliance concerns, data access issues."></div>
         </div>
         <div class="map-quad">
           <div class="quad-label">Team Input · Additional Recommendations</div>
-          <div class="editable" contenteditable="true" data-placeholder="Click to add cybersecurity tools, AI governance frameworks, or infrastructure ideas your team would prioritize…"></div>
+          <div class="editable" contenteditable="true" data-placeholder="Click to add cybersecurity tools, AI governance frameworks, or infrastructure ideas your team would prioritize."></div>
         </div>
       </div>
 
       <div class="map-metrics">
-        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">External IT / Ahmad</div></div>
+        <div class="metric"><div class="metric-label">Owner</div><div class="metric-value">Ahmad Mirza</div></div>
         <div class="metric"><div class="metric-label">Priority</div><div class="metric-value">Critical</div></div>
         <div class="metric"><div class="metric-label">Time to Impact</div><div class="metric-value">30 days</div></div>
       </div>
@@ -1387,13 +1827,13 @@
 
   </section>
 
-  <!-- ========== ELITE CAPITAL ========== -->
+  <!-- ELITE CAPITAL -->
   <section>
     <div class="section-header reveal">
       <div class="section-number">03 · THE INVESTOR LAYER</div>
       <h2 class="section-title">Elite Capital. <em>Scaled by intelligence.</em></h2>
       <p class="section-desc">
-        Elite Capital (DIFC) Limited, DFSA-authorized, provides international investors access to Canadian real assets through an exclusive pipeline of 45+ community-focused developments across Ontario. AI transforms the investor journey — from first touch to capital deployment to reporting — into a frictionless, intelligence-led experience.
+        Elite Capital (DIFC) Limited, DFSA authorized, provides international investors access to Canadian real assets through an exclusive pipeline of 45+ community focused developments across Ontario. AI transforms the investor journey from first touch to capital deployment to reporting into a frictionless, intelligence led experience.
       </p>
     </div>
 
@@ -1401,75 +1841,75 @@
       <div class="capital-tag">Elite Capital · 8 AI Initiatives</div>
       <div class="capital-title">Real Assets. Real Returns. <em>Intelligent delivery.</em></div>
       <div class="capital-desc">
-        Serving professional investors from Dubai and beyond, Elite Capital connects international capital to Ontario's 3.5M-home supply gap. AI amplifies every touchpoint: pipeline curation, due diligence, investor relations, fund administration, and DFSA regulatory compliance.
+        Serving professional investors from Dubai and beyond, Elite Capital connects international capital to Ontario's 3.5M home supply gap. AI amplifies every touchpoint: pipeline curation, due diligence, investor relations, fund administration, and DFSA regulatory compliance.
       </div>
 
       <div class="capital-grid">
         <div class="capital-item">
-          <div class="capital-item-num">01</div>
-          <div class="capital-item-content">
-            <h4>AI-Powered Deal Curation</h4>
-            <p>Automated screening of the 45+ pipeline opportunities against investor mandates, risk profiles, and return targets.</p>
+          <div class="capital-item-top">
+            <span class="capital-item-num">01</span>
+            <h4>AI Powered Deal Curation</h4>
           </div>
+          <p>Matches pipeline opportunities to investor mandates automatically so capital raises move faster and more precisely.</p>
         </div>
         <div class="capital-item">
-          <div class="capital-item-num">02</div>
-          <div class="capital-item-content">
+          <div class="capital-item-top">
+            <span class="capital-item-num">02</span>
             <h4>Due Diligence Acceleration</h4>
-            <p>Claude-assisted analysis of feasibility studies, zoning, entitlements, and market comps — weeks compressed to days.</p>
           </div>
+          <p>Compresses feasibility, zoning, and comp analysis from weeks to days so investor commitments happen faster.</p>
         </div>
         <div class="capital-item">
-          <div class="capital-item-num">03</div>
-          <div class="capital-item-content">
-            <h4>Investor CRM & Communication</h4>
-            <p>Personalized outreach at scale, automated fund updates, and Arabic/English bilingual investor materials generated on demand.</p>
+          <div class="capital-item-top">
+            <span class="capital-item-num">03</span>
+            <h4>Investor CRM and Communication</h4>
           </div>
+          <p>Delivers personalized outreach in Arabic and English at scale so every investor feels like a priority.</p>
         </div>
         <div class="capital-item">
-          <div class="capital-item-num">04</div>
-          <div class="capital-item-content">
+          <div class="capital-item-top">
+            <span class="capital-item-num">04</span>
             <h4>DFSA Compliance Automation</h4>
-            <p>Regulatory monitoring, professional client verification workflows, and F009439 audit-ready documentation continuously maintained.</p>
           </div>
+          <p>Maintains F009439 audit readiness continuously so DFSA reviews are a non event.</p>
         </div>
         <div class="capital-item">
-          <div class="capital-item-num">05</div>
-          <div class="capital-item-content">
+          <div class="capital-item-top">
+            <span class="capital-item-num">05</span>
             <h4>Fund Performance Dashboards</h4>
-            <p>Real-time portfolio analytics across all Elite Capital assets — NOI, IRR, equity multiples delivered to investors instantly.</p>
           </div>
+          <p>Delivers live NOI, IRR, and equity multiples to investors so they trust the numbers and reinvest faster.</p>
         </div>
         <div class="capital-item">
-          <div class="capital-item-num">06</div>
-          <div class="capital-item-content">
+          <div class="capital-item-top">
+            <span class="capital-item-num">06</span>
             <h4>Quarterly Reporting Engine</h4>
-            <p>AI-drafted investor reports, capital call notices, and distribution summaries — consistent quality, compressed timelines.</p>
           </div>
+          <p>Produces investor reports and capital call notices automatically so reporting quality rises as it compresses.</p>
         </div>
         <div class="capital-item">
-          <div class="capital-item-num">07</div>
-          <div class="capital-item-content">
+          <div class="capital-item-top">
+            <span class="capital-item-num">07</span>
             <h4>Canadian Market Intelligence</h4>
-            <p>Continuous analysis of Ontario housing policy, 3.5M-home supply gap trends, and G7 investment positioning for investor memos.</p>
           </div>
+          <p>Tracks Ontario housing policy and the 3.5M home gap so investor memos stay sharp and current.</p>
         </div>
         <div class="capital-item">
-          <div class="capital-item-num">08</div>
-          <div class="capital-item-content">
-            <h4>Cross-Border Tax & Structuring</h4>
-            <p>AI-assisted analysis of DIFC-Canada tax implications, currency hedging models, and investor-specific structuring memos.</p>
+          <div class="capital-item-top">
+            <span class="capital-item-num">08</span>
+            <h4>Cross Border Tax and Structuring</h4>
           </div>
+          <p>Analyzes DIFC to Canada tax paths and currency hedges so investors see optimized structures without delay.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== CLOSING ========== -->
+  <!-- CLOSING -->
   <section class="closing reveal">
     <p class="closing-quote">
       "The question isn't whether AI transforms Canadian real estate development.<br>
-      It's whether <em>Elite</em> leads the transformation — or watches it from behind."
+      It's whether <em>Elite</em> leads the transformation, or watches it from behind."
     </p>
     <div class="closing-attribution">Internal Strategy · Prepared by Ahmad Mirza · April 2026</div>
   </section>
@@ -1505,16 +1945,113 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Save editable content to localStorage
-  document.querySelectorAll('.editable').forEach((el, i) => {
-    const key = 'elite-map-edit-' + i;
-    const saved = localStorage.getItem(key);
-    if (saved) el.textContent = saved;
-    el.addEventListener('input', () => {
-      localStorage.setItem(key, el.textContent);
+  // ============ PERSISTENT TEAM INPUT SYSTEM ============
+  const STORAGE_KEY = 'elite-map-team-inputs-v5';
+
+  function getAllInputs() {
+    const data = {};
+    document.querySelectorAll('.editable').forEach((el, i) => {
+      const key = el.dataset.fieldId || 'field-' + i;
+      el.dataset.fieldId = key;
+      if (el.textContent.trim()) data[key] = el.textContent;
     });
+    return data;
+  }
+
+  function saveAllInputs() {
+    const data = getAllInputs();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    showSaveIndicator();
+  }
+
+  function loadAllInputs() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      document.querySelectorAll('.editable').forEach((el, i) => {
+        const key = el.dataset.fieldId || 'field-' + i;
+        el.dataset.fieldId = key;
+        if (data[key]) el.textContent = data[key];
+      });
+    } catch (e) { console.warn('Load failed', e); }
+  }
+
+  function showSaveIndicator() {
+    const indicator = document.getElementById('save-indicator');
+    if (!indicator) return;
+    indicator.classList.add('visible');
+    clearTimeout(indicator._timeout);
+    indicator._timeout = setTimeout(() => indicator.classList.remove('visible'), 1800);
+  }
+
+  // Attach to every editable field
+  document.querySelectorAll('.editable').forEach((el, i) => {
+    const key = 'field-' + i;
+    el.dataset.fieldId = key;
+    el.addEventListener('input', () => {
+      clearTimeout(el._saveTimeout);
+      el._saveTimeout = setTimeout(saveAllInputs, 400);
+    });
+    el.addEventListener('blur', saveAllInputs);
   });
+
+  // Load on page load
+  loadAllInputs();
+
+  // ============ EXPORT / IMPORT ============
+  function exportInputs() {
+    const data = getAllInputs();
+    const timestamp = new Date().toISOString().split('T')[0];
+    const payload = {
+      meta: {
+        exported: new Date().toISOString(),
+        project: 'Elite AI Transformation Map',
+        version: 'v5'
+      },
+      inputs: data
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'elite-ai-map-inputs-' + timestamp + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function importInputs(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const parsed = JSON.parse(e.target.result);
+        const data = parsed.inputs || parsed;
+        document.querySelectorAll('.editable').forEach((el) => {
+          const key = el.dataset.fieldId;
+          if (data[key]) el.textContent = data[key];
+        });
+        saveAllInputs();
+        alert('Team inputs imported successfully.');
+      } catch (err) {
+        alert('Could not import. Please select a valid JSON file.');
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  function clearAllInputs() {
+    if (!confirm('Clear all team inputs on this device? This cannot be undone. Export first if you want a backup.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    document.querySelectorAll('.editable').forEach(el => el.textContent = '');
+  }
 </script>
+
+<div id="save-indicator">Saved</div>
 
 </body>
 </html>
